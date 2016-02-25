@@ -53,11 +53,17 @@ ggplot(salaries, aes(x=sl)) +
   geom_histogram(aes(y=..density..),      # change the y-axis to show density instead of count 
                    bins=10,               
                    fill="grey") +           # change the color to a lighter grey
-  geom_density(alpha=.2, fill="#FF6666",adjust=.2) +   # overlay with transparent density plot filled in red
+  geom_density(alpha=.2, fill="#FF6666",adjust=.2) +   # overlay with transparent density plot filled in red where adjust                                                                  changes the kernel bandwidth, ?Q:Why is the colour here not given as                                                                           'red'
   xlab("Salary ($)") + ylab("Density") +   
   theme_grey(base_size=14)                
 
 
+```
+
+If you want to change the axis label format you can use the library scales
+```{r}
+library(scales) # load the library for axis formatting
+fig + scale_y_continuous(labels=comma) # set the y-axis to non scientific notation
 ```
 
 Finally, let's look at how to add the mean of the dataset to the plot. We add it as a *vline*-geom (for vertical line), where we have to provide a new mapping using *aes*, because we plot the mean, not the raw dataset.
@@ -79,7 +85,7 @@ The most straightfoward option is to use a *stacked* histogram, where the bars f
 
 
 ```{r}
-ggplot(salaries, aes(x=sl, fill=sx)) +     # fill determines which variable the data is grouped by
+ggplot(salaries, aes(x=sl, fill=sx)) +     # fill determines which variable the data is grouped by ?Q:diff between fill and                                                        colour? Later colour is uses
   geom_histogram(bins=10, alpha=.5, position="stack") +   # position sets the way the histogram is plotted
   xlab("Salary ($)") + ylab("Number") + 
   theme_grey(base_size=14)  
@@ -205,7 +211,14 @@ ggplot(moon,aes(x=Admission)) + geom_histogram(bins=15) +
 
 ```
 
-Now, compute group means and standard deviations for all combinations of moon phase and season. Plot a point plot with s.d. error bars which shows how hospital admissions vary as a function of season (x-axis) and moon phase. 
+Or code for the stacked hist:
+
+```{r}
+ggplot(moon, aes(x = Admission,fill = Moon)) + geom_histogram(bins = 15,position='stack') + theme_gray(base_size = 14)
+```
+
+
+Now, compute group means and standard deviations over the adimssions (easir to understand if you ad the measure variable here explicitly) for all combinations of moon phase and season. Plot a point plot with s.d. error bars which shows how hospital admissions vary as a function of season (x-axis) and moon phase. 
 
 ```{r}
 
