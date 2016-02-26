@@ -59,6 +59,11 @@ ggplot(salaries, aes(x=sl)) +
 
 
 ```
+If you want to change the axis label formatting to non-scientific notation you can use the library *scales* and
+```{r, eval=FALSE}
+scale_y_continuous(labels=comma)
+```
+
 
 Finally, let's look at how to add the mean of the dataset to the plot. We add it as a *vline*-geom (for vertical line), where we have to provide a new mapping using *aes*, because we plot the mean, not the raw dataset.
 
@@ -203,6 +208,10 @@ ggplot(moon,aes(x=Admission)) + geom_histogram(bins=15) +
   xlab("Admissions") + ylab("Frequency") +   
   theme_grey(base_size=14)          
 
+```
+or
+```{r}
+ggplot(moon, aes(x = Admission,fill = Moon)) + geom_histogram(bins = 15,position='stack') + theme_gray(base_size = 14)
 ```
 
 Now, compute group means and standard deviations for all combinations of moon phase and season. Plot a point plot with s.d. error bars which shows how hospital admissions vary as a function of season (x-axis) and moon phase. 
